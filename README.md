@@ -97,6 +97,10 @@ docker run -d --name cacapalavras -p 8080:8080 --read-only --tmpfs /tmp \
 
 Depois acesse `http://localhost:8080`. Para parar: `docker compose down`.
 
+Para o Portainer, use o arquivo `portainer-stack.yml`: em **Stacks > Add stack > Web editor**, cole o conteúdo e clique em **Deploy the stack**. O jogo fica em `http://IP-DO-SERVIDOR:8090`. A imagem é construída no servidor a partir deste repositório, que precisa ser público. Para mudar a porta, altere o número da esquerda em `ports`.
+
+A imagem escuta em HTTP na porta 8080. Para abrir na internet, coloque na frente um proxy com HTTPS, como Caddy, Traefik, Nginx Proxy Manager ou Cloudflare.
+
 ### Opção 4: publicar na internet
 
 Como o jogo é só HTML, CSS e JavaScript, qualquer hospedagem de arquivos estáticos serve: GitHub Pages, Cloudflare Pages, Netlify ou um nginx. Basta publicar a pasta do projeto.
@@ -132,6 +136,7 @@ SopaDeLetrinhas/
 ├── Dockerfile        # imagem Docker (nginx)
 ├── nginx.conf        # configuração do servidor e cabeçalhos de segurança
 ├── docker-compose.yml
+├── portainer-stack.yml  # stack pronta para o Portainer (porta 8090)
 ├── .dockerignore
 ├── LICENSE
 └── README.md

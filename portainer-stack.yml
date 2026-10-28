@@ -1,0 +1,29 @@
+# Stack para o Portainer: Caça-Palavras na porta 8090
+#
+# Como usar:
+#   Portainer > Stacks > Add stack > Web editor > cole este conteúdo > Deploy the stack
+#   Depois acesse: http://IP-DO-SERVIDOR:8090
+#
+# A imagem é construída no próprio servidor a partir do repositório do GitHub
+# (o repositório precisa ser público). Para atualizar após um novo push:
+#   abra a stack no Portainer e clique em "Update the stack" com
+#   a opção "Re-pull image and redeploy" ligada.
+#
+# Para trocar a porta, altere apenas o número da esquerda em "ports".
+
+services:
+  cacapalavras:
+    build:
+      context: https://github.com/thalisonnunes20/SopaDeLetrinhas.git#main
+    image: cacapalavras:latest
+    container_name: cacapalavras
+    ports:
+      - "8090:8080"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
