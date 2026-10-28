@@ -81,7 +81,23 @@ npx serve .
 
 Depois acesse `http://localhost:8080`.
 
-### Opção 3: publicar na internet
+### Opção 3: Docker
+
+A imagem usa nginx sem privilégios de root, com cabeçalhos de segurança e container somente leitura.
+
+```bash
+# com Docker Compose (um comando)
+docker compose up -d --build
+
+# ou direto com Docker
+docker build -t cacapalavras .
+docker run -d --name cacapalavras -p 8080:8080 --read-only --tmpfs /tmp \
+  --security-opt no-new-privileges:true --cap-drop ALL cacapalavras
+```
+
+Depois acesse `http://localhost:8080`. Para parar: `docker compose down`.
+
+### Opção 4: publicar na internet
 
 Como o jogo é só HTML, CSS e JavaScript, qualquer hospedagem de arquivos estáticos serve: GitHub Pages, Cloudflare Pages, Netlify ou um nginx. Basta publicar a pasta do projeto.
 
@@ -113,6 +129,10 @@ SopaDeLetrinhas/
 │   ├── words.js      # temas, palavras e dicas
 │   ├── puzzle.js     # gerador da grade, dificuldades e modos
 │   └── app.js        # jogo, seleção de palavras e salvamento local
+├── Dockerfile        # imagem Docker (nginx)
+├── nginx.conf        # configuração do servidor e cabeçalhos de segurança
+├── docker-compose.yml
+├── .dockerignore
 ├── LICENSE
 └── README.md
 ```
