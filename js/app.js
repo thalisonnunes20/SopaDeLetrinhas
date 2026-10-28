@@ -10,12 +10,13 @@
   var progressEl = document.getElementById('progress');
   var themeEl = document.getElementById('theme');
   var levelEl = document.getElementById('level');
+  var modeEl = document.getElementById('mode');
   var newBtn = document.getElementById('new-game');
   var winEl = document.getElementById('win');
   var winNewBtn = document.getElementById('win-new');
   var winCloseBtn = document.getElementById('win-close');
 
-  var state = null;     // { theme, level, size, grid, words }
+  var state = null;     // { theme, level, mode, size, grid, words }
   var cellEls = [];     // cellEls[linha][coluna]
   var wordEls = [];     // um <li> por palavra
   var drag = null;
@@ -49,12 +50,14 @@
 
   /* ---------- Estado e armazenamento local ---------- */
 
-  function newGame(themeId, levelId) {
+  function newGame(themeId, levelId, modeId) {
     var level = window.Puzzle.LEVELS[levelId];
-    var puzzle = window.Puzzle.generate(entriesFor(themeId), level);
+    var mode = window.Puzzle.MODES[modeId];
+    var puzzle = window.Puzzle.generate(entriesFor(themeId), level, mode);
     state = {
       theme: themeId,
       level: levelId,
+      mode: modeId,
       size: puzzle.size,
       grid: puzzle.grid,
       words: puzzle.words
@@ -64,12 +67,17 @@
     render();
   }
 
+  function startFromControls() {
+    newGame(themeEl.value, levelEl.value, modeEl.value);
+  }
+
   function save() {
     try {
       var data = {
-        v: 1,
+        v: 2,
         theme: state.theme,
         level: state.level,
+        mode: state.mode,
         grid: state.grid.map(function (row) { return row.join(''); }),
         words: state.words
       };
@@ -94,7 +102,9 @@
       var raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return null;
       var data = JSON.parse(raw);
-      if (!data || data.v !== 1) return null;
+      if (!data || (data.v !== 1 && data.v !== 2)) return null;
+      var modeId = data.v === 2 ? data.mode : 'classico';
+      if (!window.Puzzle.MODES[modeId]) return null;
       if (!window.Puzzle.LEVELS[data.level]) return null;
       if (data.theme !== SURPRISE && !window.THEMES[data.theme]) return null;
 
@@ -113,14 +123,14 @@
         var w = data.words[i];
         if (!w || typeof w.display !== 'string' || typeof w.hint !== 'string' || typeof w.text !== 'string') return null;
         if (w.display.length > 40 || w.hint.length > 120) return null;
-        if (!/^[A-Z]{3,12}$/.test(w.text)) return null;
+        if (!/^[A-Z]{3,15}$/.test(w.text)) return null;
         if (!spells(grid, w.cells, w.text)) return null;
         if (w.found !== null && !spells(grid, w.found, w.text) &&
             !spells(grid, (w.found || []).slice().reverse(), w.text)) return null;
         words.push({ display: w.display, hint: w.hint, text: w.text, cells: w.cells, found: w.found });
       }
 
-      return { theme: data.theme, level: data.level, size: size, grid: grid, words: words };
+      return { theme: data.theme, level: data.level, mode: modeId, size: size, grid: grid, words: words };
     } catch (e) {
       return null;
     }
@@ -131,6 +141,7 @@
   function render() {
     themeEl.value = state.theme;
     levelEl.value = state.level;
+    modeEl.value = state.mode;
 
     boardEl.textContent = '';
     boardEl.style.setProperty('--n', state.size);
@@ -323,18 +334,13 @@
 
   /* ---------- Controles ---------- */
 
-  newBtn.addEventListener('click', function () {
-    newGame(themeEl.value, levelEl.value);
-  });
-  themeEl.addEventListener('change', function () {
-    newGame(themeEl.value, levelEl.value);
-  });
-  levelEl.addEventListener('change', function () {
-    newGame(themeEl.value, levelEl.value);
-  });
+  newBtn.addEventListener('click', startFromControls);
+  themeEl.addEventListener('change', startFromControls);
+  levelEl.addEventListener('change', startFromControls);
+  modeEl.addEventListener('change', startFromControls);
   winNewBtn.addEventListener('click', function () {
     winEl.close();
-    newGame(themeEl.value, levelEl.value);
+    startFromControls();
   });
   winCloseBtn.addEventListener('click', function () { winEl.close(); });
 
@@ -347,6 +353,6 @@
     render();
   } else {
     var themeIds = Object.keys(window.THEMES);
-    newGame(themeIds[window.Puzzle.randInt(themeIds.length)], 'facil');
+    newGame(themeIds[window.Puzzle.randInt(themeIds.length)], 'facil', 'classico');
   }
 })();

@@ -16,23 +16,24 @@
   var DIR_DIAG_DOWN_BACK = [-1, -1];
   var DIR_DIAG_UP_BACK = [1, -1];
 
+  // Dificuldade: tamanho da grade, quantidade de palavras e tamanho preferido delas
   var LEVELS = {
-    facil: {
-      nome: 'Fácil',
-      size: 8,
-      count: 6,
+    facil: { nome: 'Fácil', size: 8, count: 6, minLen: 3 },
+    medio: { nome: 'Médio', size: 10, count: 8, minLen: 4 },
+    dificil: { nome: 'Difícil', size: 12, count: 10, minLen: 5 },
+    experiente: { nome: 'Experiente', size: 15, count: 14, minLen: 7 }
+  };
+
+  // Modo: em que direções as palavras podem ser escritas
+  var MODES = {
+    // esquerda para a direita e de cima para baixo
+    classico: {
+      nome: 'Clássico',
       dirs: [DIR_RIGHT, DIR_DOWN]
     },
-    medio: {
-      nome: 'Médio',
-      size: 10,
-      count: 8,
-      dirs: [DIR_RIGHT, DIR_DOWN, DIR_DIAG_DOWN, DIR_DIAG_UP]
-    },
-    dificil: {
-      nome: 'Difícil',
-      size: 12,
-      count: 10,
+    // todas as 8 direções: diagonais e de trás para frente
+    maluco: {
+      nome: 'Maluco',
       dirs: [DIR_RIGHT, DIR_DOWN, DIR_DIAG_DOWN, DIR_DIAG_UP,
              DIR_LEFT, DIR_UP, DIR_DIAG_DOWN_BACK, DIR_DIAG_UP_BACK]
     }
@@ -77,16 +78,22 @@
            a.indexOf(reverse(b)) !== -1 || b.indexOf(reverse(a)) !== -1;
   }
 
-  function pickWords(pool, count) {
+  function conflictsWithAny(candidate, chosen) {
+    for (var j = 0; j < chosen.length; j++) {
+      if (conflicts(candidate.text, chosen[j].text)) return true;
+    }
+    return false;
+  }
+
+  // Sorteia palavras dando preferência às que têm o tamanho mínimo do nível.
+  // Se o tema não tiver palavras longas suficientes, completa com as mais curtas.
+  function pickWords(pool, count, minLen) {
     var chosen = [];
-    var shuffled = shuffle(pool);
-    for (var i = 0; i < shuffled.length && chosen.length < count; i++) {
-      var candidate = shuffled[i];
-      var ok = true;
-      for (var j = 0; j < chosen.length; j++) {
-        if (conflicts(candidate.text, chosen[j].text)) { ok = false; break; }
-      }
-      if (ok) chosen.push(candidate);
+    var preferred = shuffle(pool.filter(function (e) { return e.text.length >= minLen; }));
+    var others = shuffle(pool.filter(function (e) { return e.text.length < minLen; }));
+    var ordered = preferred.concat(others);
+    for (var i = 0; i < ordered.length && chosen.length < count; i++) {
+      if (!conflictsWithAny(ordered[i], chosen)) chosen.push(ordered[i]);
     }
     return chosen;
   }
@@ -155,8 +162,9 @@
   /**
    * entries: lista de [palavra, dica]
    * level: um item de LEVELS
+   * mode: um item de MODES
    */
-  function generate(entries, level) {
+  function generate(entries, level, mode) {
     var seen = {};
     var pool = [];
     entries.forEach(function (entry) {
@@ -167,9 +175,9 @@
     });
 
     for (var attempt = 0; attempt < 80; attempt++) {
-      var picked = pickWords(pool, level.count);
+      var picked = pickWords(pool, level.count, level.minLen);
       if (picked.length < level.count) continue;
-      var result = tryPlace(picked, level.size, level.dirs);
+      var result = tryPlace(picked, level.size, mode.dirs);
       if (result) return result;
     }
     throw new Error('Não foi possível gerar o quebra-cabeça.');
@@ -177,6 +185,7 @@
 
   global.Puzzle = {
     LEVELS: LEVELS,
+    MODES: MODES,
     generate: generate,
     normalize: normalize,
     randInt: randInt

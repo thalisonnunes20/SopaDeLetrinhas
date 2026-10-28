@@ -29,7 +29,14 @@
         ['BORBOLETA', 'Inseto de asas coloridas'],
         ['TUCANO', 'Ave de bico grande e colorido'],
         ['ABELHA', 'Produz o mel'],
-        ['FORMIGA', 'Inseto pequeno que trabalha em grupo']
+        ['FORMIGA', 'Inseto pequeno que trabalha em grupo'],
+        ['HIPOPÓTAMO', 'Gigante que passa o dia na água dos rios africanos'],
+        ['RINOCERONTE', 'Tem um grande chifre sobre o focinho'],
+        ['ORNITORRINCO', 'Mamífero australiano que bota ovos e tem bico de pato'],
+        ['CAMALEÃO', 'Réptil que muda de cor'],
+        ['TAMANDUÁ', 'Come formigas com a língua comprida'],
+        ['CAPIVARA', 'Maior roedor do mundo'],
+        ['BEIJA-FLOR', 'Ave minúscula que bate as asas muito rápido']
       ]
     },
 
@@ -53,7 +60,14 @@
         ['MARACUJÁ', 'Tem suco azedinho que acalma'],
         ['KIWI', 'Verde por dentro e peludo por fora'],
         ['PERA', 'Tem formato de sino'],
-        ['JABUTICABA', 'Nasce direto no tronco da árvore']
+        ['JABUTICABA', 'Nasce direto no tronco da árvore'],
+        ['TANGERINA', 'Também chamada de mexerica ou bergamota'],
+        ['FRAMBOESA', 'Pequena e vermelha, muito usada em geleias'],
+        ['ABACATE', 'Verde e cremoso, combina com açúcar ou sal'],
+        ['CARAMBOLA', 'Cortada em fatias vira uma estrela'],
+        ['GRAVIOLA', 'Grande, verde e coberta de espinhos moles'],
+        ['PITANGA', 'Pequena, vermelha e canelada'],
+        ['TAMARINDO', 'Vagem com polpa azedinha e pegajosa']
       ]
     },
 
@@ -77,7 +91,14 @@
         ['ALEMANHA', 'País de Berlim e das salsichas'],
         ['URUGUAI', 'Vizinho do extremo sul do Brasil'],
         ['COLÔMBIA', 'País do café e de Bogotá'],
-        ['AUSTRÁLIA', 'País-continente dos cangurus']
+        ['AUSTRÁLIA', 'País-continente dos cangurus'],
+        ['INGLATERRA', 'Parte do Reino Unido, com Londres'],
+        ['DINAMARCA', 'País dos vikings e de Copenhague'],
+        ['VENEZUELA', 'Vizinho ao norte do Brasil'],
+        ['PARAGUAI', 'País sem litoral vizinho do Brasil'],
+        ['MOÇAMBIQUE', 'País africano que fala português'],
+        ['TAILÂNDIA', 'Terra dos templos e elefantes no Sudeste Asiático'],
+        ['INDONÉSIA', 'País formado por milhares de ilhas']
       ]
     },
 
@@ -101,7 +122,14 @@
         ['COSTELA', 'Osso que protege o peito'],
         ['FÍGADO', 'Órgão que ajuda a filtrar o sangue'],
         ['DENTE', 'Serve para mastigar'],
-        ['BOCHECHA', 'Fica dos lados do rosto']
+        ['BOCHECHA', 'Fica dos lados do rosto'],
+        ['ESTÔMAGO', 'Onde a comida é digerida'],
+        ['INTESTINO', 'Tubo longo onde os nutrientes são absorvidos'],
+        ['ARTICULAÇÃO', 'Ponto de encontro entre dois ossos'],
+        ['PANTURRILHA', 'Músculo da parte de trás da perna'],
+        ['ANTEBRAÇO', 'Parte do braço entre o cotovelo e o pulso'],
+        ['CALCANHAR', 'Parte de trás do pé'],
+        ['MANDÍBULA', 'Osso que movimenta o queixo']
       ]
     },
 
@@ -125,7 +153,14 @@
         ['ABRIDOR', 'Ajuda a abrir latas e garrafas'],
         ['ESCORREDOR', 'Tira a água do macarrão'],
         ['FRIGIDEIRA', 'Usada para fritar ovos'],
-        ['XÍCARA', 'Para tomar café ou chá']
+        ['XÍCARA', 'Para tomar café ou chá'],
+        ['LIQUIDIFICADOR', 'Bate vitaminas e sucos'],
+        ['MICRO-ONDAS', 'Esquenta a comida rapidinho'],
+        ['DESCASCADOR', 'Tira a casca de legumes e frutas'],
+        ['RALADOR', 'Transforma queijo em fios'],
+        ['ESPÁTULA', 'Vira panqueca e mexe a massa'],
+        ['TORRADEIRA', 'Dá cor e crocância ao pão'],
+        ['AÇUCAREIRO', 'Pote onde se guarda o açúcar']
       ]
     },
 
@@ -149,7 +184,14 @@
         ['PANTANAL', 'Maior planície alagada do mundo'],
         ['ILHA', 'Terra cercada de água por todos os lados'],
         ['LAGO', 'Água parada cercada de terra'],
-        ['CAMPO', 'Terreno aberto com plantas e animais']
+        ['CAMPO', 'Terreno aberto com plantas e animais'],
+        ['TEMPESTADE', 'Chuva forte com raios e trovões'],
+        ['FURACÃO', 'Ventania giratória gigantesca'],
+        ['TERREMOTO', 'Tremor forte do solo'],
+        ['ARQUIPÉLAGO', 'Conjunto de ilhas'],
+        ['CORDILHEIRA', 'Longa cadeia de montanhas'],
+        ['ATMOSFERA', 'Camada de ar que envolve a Terra'],
+        ['HORIZONTE', 'Linha onde o céu parece encontrar a terra']
       ]
     }
   };
